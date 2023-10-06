@@ -28,4 +28,9 @@ if (userNumber === correctAnswer) {
   console.log("Wrong answer. The enemy lives. The troll slashes his sword again!");
 }
 
+/////////////
+Thinking bout methodology for choices: Each text section has an iD. An array contains IDs for each section and each choice, arguments for math tests etc. We then navigate around the text using the array indices and showing/hiding the text IDs.
+
+//////////////////////////////////////////
+
 ![Kinght Image](https://wallpapersmug.com/large/26ad5c/fantasy-knight-art-castle.jpg)
