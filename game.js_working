@@ -2,7 +2,7 @@ const textElement = document.getElementById("text");
 const optionButtonsElement = document.getElementById("option-buttons");
 
 // Initialize variables to keep track of correct and incorrect answers.
-//let correctAnswers = 0;
+let correctAnswers = 0;
 let incorrectAnswers = 0;
 
 // Check if there's existing data in local storage and update the variables.
@@ -12,17 +12,6 @@ if (localStorage.getItem("correctAnswers")) {
 if (localStorage.getItem("incorrectAnswers")) {
   incorrectAnswers = parseInt(localStorage.getItem("incorrectAnswers"));
 }
-
-
-const highscores = [];
-
-function User(name) {
-  this.name = name;
-  this.correctAnswers = 0;
-  highscores.push(this);
-}
-
-console.log(highscores);
 
 
 function startGame() {
@@ -46,6 +35,9 @@ function showTextNode(textNodeIndex) {
   });
 }
 
+
+const resultsArray = []; // Initialize an array to store the results
+
 function selectOption(option) {
   const nextTextNodeId = option.nextText;
   if (nextTextNodeId <= 0) {
@@ -53,51 +45,55 @@ function selectOption(option) {
   }
   showTextNode(nextTextNodeId);
 
-  // Update correct and incorrect answers and save them to local storage.
-  if (
-    nextTextNodeId === 8 ||
-    nextTextNodeId === 13 ||
-    nextTextNodeId === 16 ||
-    nextTextNodeId === 28 ||
-    nextTextNodeId === 20 ||
-    nextTextNodeId === 22 ||
-    nextTextNodeId === 24 ||
-    nextTextNodeId === 27
-  ) {
+  const correctIds = [8, 13, 16, 28, 20, 22, 24, 27];
+  const incorrectIds = [9, 12, 15, 19, 26, 29];
+  
+  if (correctIds.includes(nextTextNodeId)) {
     correctAnswers++;
-  } else if (
-    nextTextNodeId === 9 ||
-    nextTextNodeId === 12 ||
-    nextTextNodeId === 15 ||
-    nextTextNodeId === 19 ||
-    nextTextNodeId === 26 ||
-    nextTextNodeId === 29
-  ) {
+  } else if (incorrectIds.includes(nextTextNodeId)) {
     incorrectAnswers++;
   }
+  
+  // Push the updated values into the resultsArray
+  resultsArray.push({ correctAnswers, incorrectAnswers });
 
   localStorage.setItem("correctAnswers", correctAnswers);
   localStorage.setItem("incorrectAnswers", incorrectAnswers);
-  console.log(correctAnswers);
-  console.log(incorrectAnswers);
+
 }
 
-// Display the leaderboard on your webpage.
+// Function to display the leaderboard in real-time
 function displayLeaderboard() {
-  // Create a leaderboard element.
-  const leaderboardElement = document.createElement("div");
-  leaderboardElement.innerHTML = `
-    <h2>Leaderboard</h2>
-    <p>Correct Answers: ${correctAnswers}</p>
-    <p>Incorrect Answers: ${incorrectAnswers}</p>
-  `;
-  // Add the leaderboard element to the DOM.
+  // Create an ordered list element.
+  const leaderboardElement = document.createElement("ol");
+
+  // Create list items for correctAnswers.
+  const correctAnswersItem = document.createElement("li");
+  correctAnswersItem.textContent = `Correct Answers: ${correctAnswers}`;
+
+  // Append the list items to the ordered list.
+  leaderboardElement.appendChild(correctAnswersItem);
+
+  // Create list items for incorrectAnswers.
+  const incorrectAnswersItem = document.createElement("li");
+  incorrectAnswersItem.textContent = `Incorrect Answers: ${incorrectAnswers}`;
+
+  // Append the list items to the ordered list.
+  leaderboardElement.appendChild(incorrectAnswersItem);
+
+  // Create a heading element for the leaderboard.
+  const headingElement = document.createElement("h2");
+  headingElement.textContent = "Leaderboard";
+
+  // Add the heading and ordered list to the DOM.
+  document.body.appendChild(headingElement);
   document.body.appendChild(leaderboardElement);
 }
 
 // Call the displayLeaderboard function to display the leaderboard.
 displayLeaderboard();
 
+  
 const textNodes = [
   {
     id: 1,
