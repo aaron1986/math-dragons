@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./images/favicons/favicon.ico" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
+    <title>Leaderboard</title>
+  </head>
+  <body>
+    <header>
+      <div class="header">
+        <nav>
+          <img
+            src="./images/logojoined.png"
+            width="500"
+            height="180"
+            alt="Math Dragons Logo"
+            class="overlay-image"
+          />
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="game.html">Game</a></li>
+            <li><a href="#">Leaderboard</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section id="board-page">
+        <h1>Leaderboard</h1>
+        <div id="leaderboard"></div>
+
+        <script>
+const leaderboardElement = document.getElementById("leaderboard");
+
+const highScoresJSON = localStorage.getItem("highScores");
+const highScores = highScoresJSON ? JSON.parse(highScoresJSON) : [];
+    if (highScores.length > 0) {
+        // Iterate through the high scores and display each player's score
+        highScores.forEach((score, index) => {
+            leaderboardElement.innerHTML += `
+                <p>${score.name}</p>
+                <p>Correct Answers: ${score.correctAnswers}</p>
+                <p>Incorrect Answers: ${score.incorrectAnswers}</p>
+                <br>
+            `;
+        });
+    } else {
+        leaderboardElement.innerHTML = "No high scores to display.";
+}
+
+        </script>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2023 Math Dragons</p>
+      
+    </footer>
+  </body>
+</html>
