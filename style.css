@@ -1,0 +1,8 @@
+#board-page div {
+  width: 50%;
+}
+
+#leaderboard {
+  overflow: scroll;
+  height: 300px;
+}
